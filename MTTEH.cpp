@@ -25,8 +25,8 @@ void check_serial()
 
 #include <Adafruit_MMA8451.h>
 
-Adafruit_MMA8451 mma = Adafruit_MMA8451();
-sensors_event_t event;
+Adafruit_MMA8451 mma_gyroaccel_sensor = Adafruit_MMA8451();
+sensors_event_t mma_gyroaccel_event;
 
 void init_MMA8451()
 {
@@ -34,38 +34,38 @@ void init_MMA8451()
 
     Serial.println("MMA8451 Initialization !");
 
-    if (!mma.begin()) {
+    if (!mma_gyroaccel_sensor.begin()) {
         Serial.println("MMA8451 Initialisation Failed !");
         Serial.println("Program died !");
         program_died();
     }
     Serial.println("MMA8451 Connected!");
-    mma.setRange(MMA8451_RANGE_2_G);
-    Serial.print("Range = "); Serial.print(2 << mma.getRange());  
+    mma_gyroaccel_sensor.setRange(MMA8451_RANGE_2_G);
+    Serial.print("Range = "); Serial.print(2 << mma_gyroaccel_sensor.getRange());  
     Serial.println("G");
 }
 
 void read_MMA8451()
 {
-    mma.read();
+    mma_gyroaccel_sensor.read();
 }
 
 void print_X_MMA8451()
 {
     Serial.print("X: ");
-    Serial.println(mma.x); 
+    Serial.println(mma_gyroaccel_sensor.x); 
 }
 
 void print_Y_MMA8451()
 {
     Serial.print("Y: ");
-    Serial.println(mma.y); 
+    Serial.println(mma_gyroaccel_sensor.y); 
 }
 
 void print_Z_MMA8451()
 {
     Serial.print("Z: ");
-    Serial.println(mma.z); 
+    Serial.println(mma_gyroaccel_sensor.z); 
 }
 
 void print_all_MMA8451()
@@ -78,27 +78,27 @@ void print_all_MMA8451()
 
 void get_event_MMA8451()
 {
-    mma.getEvent(&event);
+    mma_gyroaccel_sensor.getEvent(&mma_gyroaccel_event);
 }
 
 void print_X_event_MMA8451()
 {
     Serial.print("X: ");
-    Serial.print(event.acceleration.x);
+    Serial.print(mma_gyroaccel_event.acceleration.x);
     Serial.println("m/s^2");
 }
 
 void print_Y_event_MMA8451()
 {
     Serial.print("Y: ");
-    Serial.print(event.acceleration.y);
+    Serial.print(mma_gyroaccel_event.acceleration.y);
     Serial.println("m/s^2");
 }
 
 void print_Z_event_MMA8451()
 {
     Serial.print("Z: ");
-    Serial.print(event.acceleration.z);
+    Serial.print(mma_gyroaccel_event.acceleration.z);
     Serial.println("m/s^2");
 }
 
@@ -112,14 +112,14 @@ void print_all_event_MMA8451()
 
 uint8_t get_orientation_MMA8451()
 {
-    return mma.getOrientation();
+    return mma_gyroaccel_sensor.getOrientation();
 }
 
 // SGP30 functions
 
 #include <Adafruit_SGP30.h>
 
-Adafruit_SGP30 sgp;
+Adafruit_SGP30 sgp_gas_sensor;
 
 void init_SGP30()
 {
@@ -127,23 +127,50 @@ void init_SGP30()
 
     Serial.println("SGP30 Initialization !");
 
-    if (!sgp.begin()) {
+    if (!sgp_gas_sensor.begin()) {
         Serial.println("SGP30 Initialisation Failed !");
         Serial.println("Program died !");
         program_died();
     }
     Serial.println("SGP30 Connected!");
     Serial.print("SGP30 serial #");
-    Serial.print(sgp.serialnumber[0], HEX);
-    Serial.print(sgp.serialnumber[1], HEX);
-    Serial.println(sgp.serialnumber[2], HEX);
+    Serial.print(sgp_gas_sensor.serialnumber[0], HEX);
+    Serial.print(sgp_gas_sensor.serialnumber[1], HEX);
+    Serial.println(sgp_gas_sensor.serialnumber[2], HEX);
+
+    //sgp_gas_sensor.setIAQBaseline(0x8E68, 0x8F41);
+}
+
+bool check_SGP30()
+{
+    if (!sgp_gas_sensor.IAQmeasure()) {
+        Serial.println("SGP30 Measurement Failed !");
+        return true;
+    }
+    return false;
+}
+
+uint16_t get_TVOC_SGP30()
+{
+    return sgp_gas_sensor.TVOC;
+}
+
+
+uint16_t get_eCO2_SGP30()
+{
+    return sgp_gas_sensor.eCO2;
+}
+
+boolean getIAQBaseline_SGP30(uint16_t *eCO2_base, uint16_t *TVOC_base)
+{
+    return sgp_gas_sensor.getIAQBaseline(eCO2_base, TVOC_base);
 }
 
 // MCP9808 functions
 
 #include <Adafruit_MCP9808.h>
 
-Adafruit_MCP9808 mcp = Adafruit_MCP9808();
+Adafruit_MCP9808 mcp_temp_sensor = Adafruit_MCP9808();
 
 void init_MCP9808()
 {
@@ -151,12 +178,39 @@ void init_MCP9808()
 
     Serial.println("MCP9808 Initialization !");
 
-    if (!mcp.begin(0x18)) {
+    if (!mcp_temp_sensor.begin(0x18)) {
         Serial.println("MCP9808 Initialisation Failed !");
         Serial.println("Program died !");
         program_died();
     }
     Serial.println("MCP9808 Connected!");
-    //sgp.setIAQBaseline(0x8E68, 0x8F41);
-    tempsensor.setResolution(3);
+    mcp_temp_sensor.setResolution(3);
+}
+
+void wake_MCP9808()
+{
+    Serial.println("Waking up MCP9808...");
+    mcp_temp_sensor.wake();
+}
+
+void get_resolution_MCP9808()
+{
+    Serial.print("Resolution in mode: ");
+    Serial.println(mcp_temp_sensor.getResolution());
+}
+
+float get_temperature_C_MCP9808()
+{
+    return mcp_temp_sensor.readTempC();
+}
+
+float get_temperature_F_MCP9808()
+{
+    return mcp_temp_sensor.readTempF();
+}
+
+void stop_MCP9808()
+{
+    Serial.println("Shutdown MCP9808...");
+    mcp_temp_sensor.shutdown_wake(1);
 }
