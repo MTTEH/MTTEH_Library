@@ -22,8 +22,9 @@
 #endif
 
 #include <MTTEH.h>
-#include <Wire.h>
 #include <Adafruit_Sensor.h>
+#include <Wire.h>
+
 
 // Global functions
 
@@ -53,7 +54,8 @@ void init_MMA8451()
     }
     Serial.println("MMA8451 Connected!");
     mma_gyroaccel_sensor.setRange(MMA8451_RANGE_2_G);
-    Serial.print("Range = "); Serial.print(2 << mma_gyroaccel_sensor.getRange());  
+    Serial.print("Range = ");
+    Serial.print(2 << mma_gyroaccel_sensor.getRange());  
     Serial.println("G");
 }
 
