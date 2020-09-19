@@ -4,6 +4,9 @@
     #include "WProgram.h"
 #endif
 
+#include <Adafruit_MMA8451.h>
+#include <Wire.h>
+
 #ifndef MTTEH_H_
 #define MTTEH_H_
 
