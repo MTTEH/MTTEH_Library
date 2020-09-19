@@ -38,9 +38,17 @@ uint8_t get_orientation_MMA8451();
 // SGP30 functions
 
 void init_SGP30();
+bool check_SGP30();
+uint16_t get_TVOC_SGP30();
+uint16_t get_eCO2_SGP30();
 
 // MCP9808 functions
 
 void init_MCP9808();
+void wake_MCP9808();
+void get_resolution_MCP9808();
+float get_temperature_C_MCP9808();
+float get_temperature_F_MCP9808();
+void stop_MCP9808();
 
 #endif //MTTEH_H_
