@@ -1,7 +1,19 @@
 /*
-** MTTEH Library
-** Created by GGLinnk <gglinnk@protonmail.com>
-*/
+** MTTEH Main Library
+** https://github.com/MTTEH/MTTEH_Library
+** 
+** Authors :
+**  - Narutarded (https://github.com/narutarder).
+**  - Kiradae (https://github.com/Kiradae).
+**  - GGLinnk (https://github.com/GGLinnk) <gglinnk@protonmail.com>.
+**  - Wabia (https://github.com/wabia).
+** 
+** Licence GPLv3
+**
+** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
+** Personal Project      | World          | 2018-2020
+** 
+**/
 
 #if ARDUINO >= 100
     #include <Arduino.h>

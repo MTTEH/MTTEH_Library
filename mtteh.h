@@ -1,3 +1,20 @@
+/*
+** MTTEH Main Library
+** https://github.com/MTTEH/MTTEH_Library
+** 
+** Authors :
+**  - Narutarded (https://github.com/narutarder).
+**  - Kiradae (https://github.com/Kiradae).
+**  - GGLinnk (https://github.com/GGLinnk) <gglinnk@protonmail.com>.
+**  - Wabia (https://github.com/wabia).
+** 
+** Licence GPLv3
+**
+** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
+** Personal Project      | World          | 2018-2020
+** 
+**/
+
 #if ARDUINO >= 100
     #include "Arduino.h"
 #else
@@ -7,20 +24,8 @@
 #include <Adafruit_MMA8451.h>
 #include <Wire.h>
 
-#ifndef MTTEH_H_
-#define MTTEH_H_
-
 #define program_died() while (1)
 #define wait_for(x) while (!x)
-
-#define MAvD1 2
-#define MAvD2 3
-#define MAvG1 4
-#define MAvG2 5
-#define MArD1 6
-#define MArD2 7
-#define MArG1 8
-#define MArG2 9
 
 // MMA8451 functions
 
@@ -54,5 +59,3 @@ void get_resolution_MCP9808();
 float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
-
-#endif //MTTEH_H_
