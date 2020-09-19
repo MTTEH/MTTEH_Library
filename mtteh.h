@@ -24,6 +24,9 @@
 #include <Adafruit_MMA8451.h>
 #include <Wire.h>
 
+#ifndef MTTEH_H_
+#define MTTEH_H_
+
 #define program_died() while (1)
 #define wait_for(x) while (!x)
 
@@ -62,3 +65,5 @@ void get_resolution_MCP9808();
 float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
+
+#endif // MTTEH_H_
