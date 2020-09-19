@@ -36,6 +36,11 @@ void print_all_event_MMA8451();
 uint8_t get_orientation_MMA8451();
 
 // SGP30 functions
+
 void init_SGP30();
+
+// MCP9808 functions
+
+void init_MCP9808();
 
 #endif //MTTEH_H_
