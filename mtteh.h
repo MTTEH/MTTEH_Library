@@ -27,9 +27,12 @@
 #define program_died() while (1)
 #define wait_for(x) while (!x)
 
-// MMA8451 functions
+// General functions
 
 void check_serial()
+
+// MMA8451 functions
+
 void init_MMA8451();
 void read_MMA8451();
 void print_X_MMA8451();
