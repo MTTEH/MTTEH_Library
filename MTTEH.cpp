@@ -1,18 +1,18 @@
 /*
 ** MTTEH Main Library
 ** https://github.com/MTTEH/MTTEH_Library
-** 
+**
 ** Authors :
 **  - Narutarded (https://github.com/narutarder).
 **  - Kiradae (https://github.com/Kiradae).
 **  - GGLinnk (https://github.com/GGLinnk) <gglinnk@protonmail.com>.
 **  - Wabia (https://github.com/wabia).
-** 
+**
 ** Licence GPLv3
 **
 ** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
 ** Personal Project      | World          | 2018-2020
-** 
+**
 **/
 
 #if ARDUINO >= 100
@@ -21,10 +21,9 @@
     #include <WProgram.h>
 #endif
 
-#include <MTTEH.h>
 #include <Adafruit_Sensor.h>
+#include <MTTEH.h>
 #include <Wire.h>
-
 
 // Global functions
 
@@ -55,7 +54,7 @@ void init_MMA8451()
     Serial.println("MMA8451 Connected!");
     mma_gyroaccel_sensor.setRange(MMA8451_RANGE_2_G);
     Serial.print("Range = ");
-    Serial.print(2 << mma_gyroaccel_sensor.getRange());  
+    Serial.print(2 << mma_gyroaccel_sensor.getRange());
     Serial.println("G");
 }
 
@@ -67,19 +66,19 @@ void read_MMA8451()
 void print_X_MMA8451()
 {
     Serial.print("X: ");
-    Serial.println(mma_gyroaccel_sensor.x); 
+    Serial.println(mma_gyroaccel_sensor.x);
 }
 
 void print_Y_MMA8451()
 {
     Serial.print("Y: ");
-    Serial.println(mma_gyroaccel_sensor.y); 
+    Serial.println(mma_gyroaccel_sensor.y);
 }
 
 void print_Z_MMA8451()
 {
     Serial.print("Z: ");
-    Serial.println(mma_gyroaccel_sensor.z); 
+    Serial.println(mma_gyroaccel_sensor.z);
 }
 
 void print_all_MMA8451()
@@ -152,7 +151,7 @@ void init_SGP30()
     Serial.print(sgp_gas_sensor.serialnumber[1], HEX);
     Serial.println(sgp_gas_sensor.serialnumber[2], HEX);
 
-    //sgp_gas_sensor.setIAQBaseline(0x8E68, 0x8F41);
+    // sgp_gas_sensor.setIAQBaseline(0x8E68, 0x8F41);
 }
 
 bool check_SGP30()
@@ -168,7 +167,6 @@ uint16_t get_TVOC_SGP30()
 {
     return sgp_gas_sensor.TVOC;
 }
-
 
 uint16_t get_eCO2_SGP30()
 {

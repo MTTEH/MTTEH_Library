@@ -1,18 +1,18 @@
 /*
 ** MTTEH Main Library
 ** https://github.com/MTTEH/MTTEH_Library
-** 
+**
 ** Authors :
 **  - Narutarded (https://github.com/narutarder).
 **  - Kiradae (https://github.com/Kiradae).
 **  - GGLinnk (https://github.com/GGLinnk) <gglinnk@protonmail.com>.
 **  - Wabia (https://github.com/wabia).
-** 
+**
 ** Licence GPLv3
 **
 ** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
 ** Personal Project      | World          | 2018-2020
-** 
+**
 **/
 
 #if ARDUINO >= 100
@@ -25,18 +25,18 @@
 #include <Wire.h>
 
 #ifndef MTTEH_H_
-#define MTTEH_H_
+    #define MTTEH_H_
 
-#define program_died() while (1)
-#define wait_for(x) while (!x)
+    #define program_died() while (1)
+    #define wait_for(x)    while (!x)
 
 // General functions
 
 void check_serial()
 
-// MMA8451 functions
+    // MMA8451 functions
 
-void init_MMA8451();
+    void init_MMA8451();
 void read_MMA8451();
 void print_X_MMA8451();
 void print_Y_MMA8451();
@@ -66,4 +66,4 @@ float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
 
-#endif // MTTEH_H_
+#endif    // MTTEH_H_
