@@ -41,6 +41,7 @@ void init_SGP30();
 bool check_SGP30();
 uint16_t get_TVOC_SGP30();
 uint16_t get_eCO2_SGP30();
+boolean getIAQBaseline_SGP30(uint16_t *eCO2_base, uint16_t *TVOC_base);
 
 // MCP9808 functions
 
