@@ -30,13 +30,15 @@
     #define program_died() while (1)
     #define wait_for(x)    while (!x)
 
+// clang-format off
+
 // General functions
 
 void check_serial()
 
-    // MMA8451 functions
+// MMA8451 functions
 
-    void init_MMA8451();
+void init_MMA8451();
 void read_MMA8451();
 void print_X_MMA8451();
 void print_Y_MMA8451();
@@ -65,5 +67,7 @@ void get_resolution_MCP9808();
 float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
+
+// clang-format on
 
 #endif    // MTTEH_H_
