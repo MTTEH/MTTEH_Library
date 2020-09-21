@@ -12,26 +12,58 @@
 **
 **/
 
+#ifndef MTTEH_H_
+#define MTTEH_H_
+
 #if ARDUINO >= 100
     #include "Arduino.h"
 #else
     #include "WProgram.h"
 #endif
 
-#include <Adafruit_MMA8451.h>
 #include <Adafruit_Sensor.h>
 
-#ifndef MTTEH_H_
-#define MTTEH_H_
-
-    #define program_died() while (1)
-    #define wait_for(x)    while (!x)
+#define program_died() while (1)
+#define wait_for(x)    while (!x)
 
 class MTTEH
 {
   public:
     void check_serial();
     class MTTEH_MMA8451;
+};
+
+// MMA8451 functions
+
+#include <Adafruit_MMA8451.h>
+
+class MMA8451
+{
+    static Adafruit_MMA8451 _sensor;
+    static sensors_event_t _event;
+
+  public:
+    void init();
+    void read();
+    class Print
+    {
+      public:
+        void X();
+        void Y();
+        void Z();
+    };
+    bool get_event();
+    class Event
+    {
+        class Print
+        {
+          public:
+            void X();
+            void Y();
+            void Z();
+        };
+    };
+    uint8_t get_orientation();
 };
 
 // SGP30 functions
@@ -51,4 +83,4 @@ float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
 
-#endif // MTTEH_H_
+#endif    // MTTEH_H_
