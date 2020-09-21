@@ -10,9 +10,6 @@
 **
 ** Licence GPLv3
 **
-** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
-** Personal Project      | World          | 2018-2020
-**
 **/
 
 #if ARDUINO >= 100
@@ -21,9 +18,7 @@
     #include <WProgram.h>
 #endif
 
-#include <Adafruit_Sensor.h>
-#include <MTTEH.h>
-#include <Wire.h>
+#include "MTTEH.hpp"
 
 // Global functions
 
@@ -31,101 +26,6 @@ void check_serial()
 {
     if (!Serial)
         program_died();
-}
-
-// MMA8451 functions
-
-#include <Adafruit_MMA8451.h>
-
-Adafruit_MMA8451 mma_gyroaccel_sensor = Adafruit_MMA8451();
-sensors_event_t mma_gyroaccel_event;
-
-void init_MMA8451()
-{
-    check_serial();
-
-    Serial.println("MMA8451 Initialization !");
-
-    if (!mma_gyroaccel_sensor.begin()) {
-        Serial.println("MMA8451 Initialisation Failed !");
-        Serial.println("Program died !");
-        program_died();
-    }
-    Serial.println("MMA8451 Connected!");
-    mma_gyroaccel_sensor.setRange(MMA8451_RANGE_2_G);
-    Serial.print("Range = ");
-    Serial.print(2 << mma_gyroaccel_sensor.getRange());
-    Serial.println("G");
-}
-
-void read_MMA8451()
-{
-    mma_gyroaccel_sensor.read();
-}
-
-void print_X_MMA8451()
-{
-    Serial.print("X: ");
-    Serial.println(mma_gyroaccel_sensor.x);
-}
-
-void print_Y_MMA8451()
-{
-    Serial.print("Y: ");
-    Serial.println(mma_gyroaccel_sensor.y);
-}
-
-void print_Z_MMA8451()
-{
-    Serial.print("Z: ");
-    Serial.println(mma_gyroaccel_sensor.z);
-}
-
-void print_all_MMA8451()
-{
-    print_X_MMA8451();
-    print_Y_MMA8451();
-    print_Z_MMA8451();
-    Serial.println("");
-}
-
-void get_event_MMA8451()
-{
-    mma_gyroaccel_sensor.getEvent(&mma_gyroaccel_event);
-}
-
-void print_X_event_MMA8451()
-{
-    Serial.print("X: ");
-    Serial.print(mma_gyroaccel_event.acceleration.x);
-    Serial.println("m/s^2");
-}
-
-void print_Y_event_MMA8451()
-{
-    Serial.print("Y: ");
-    Serial.print(mma_gyroaccel_event.acceleration.y);
-    Serial.println("m/s^2");
-}
-
-void print_Z_event_MMA8451()
-{
-    Serial.print("Z: ");
-    Serial.print(mma_gyroaccel_event.acceleration.z);
-    Serial.println("m/s^2");
-}
-
-void print_all_event_MMA8451()
-{
-    print_X_event_MMA8451();
-    print_Y_event_MMA8451();
-    print_Z_event_MMA8451();
-    Serial.println("");
-}
-
-uint8_t get_orientation_MMA8451()
-{
-    return mma_gyroaccel_sensor.getOrientation();
 }
 
 // SGP30 functions

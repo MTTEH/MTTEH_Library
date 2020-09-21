@@ -10,9 +10,6 @@
 **
 ** Licence GPLv3
 **
-** Lycée Frédéric Ozanam | Cesson-Sévigné | 2018-2019
-** Personal Project      | World          | 2018-2020
-**
 **/
 
 #if ARDUINO >= 100
@@ -22,34 +19,20 @@
 #endif
 
 #include <Adafruit_MMA8451.h>
-#include <Wire.h>
+#include <Adafruit_Sensor.h>
 
 #ifndef MTTEH_H_
-    #define MTTEH_H_
+#define MTTEH_H_
 
     #define program_died() while (1)
     #define wait_for(x)    while (!x)
 
-// clang-format off
-
-// General functions
-
-void check_serial()
-
-// MMA8451 functions
-
-void init_MMA8451();
-void read_MMA8451();
-void print_X_MMA8451();
-void print_Y_MMA8451();
-void print_Z_MMA8451();
-void print_all_MMA8451();
-void get_event_MMA8451();
-void print_X_event_MMA8451();
-void print_Y_event_MMA8451();
-void print_Z_event_MMA8451();
-void print_all_event_MMA8451();
-uint8_t get_orientation_MMA8451();
+class MTTEH
+{
+  public:
+    void check_serial();
+    class MTTEH_MMA8451;
+};
 
 // SGP30 functions
 
@@ -68,6 +51,4 @@ float get_temperature_C_MCP9808();
 float get_temperature_F_MCP9808();
 void stop_MCP9808();
 
-// clang-format on
-
-#endif    // MTTEH_H_
+#endif // MTTEH_H_
