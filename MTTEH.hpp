@@ -21,6 +21,22 @@
     #include "WProgram.h"
 #endif
 
+#define NO_SPEED     0
+#define LOW_SPEED    10
+#define MEDIUM_SPEED 50
+#define HIGH_SPEED   100
+
+#define MOVE_STOP_SAFE_DELAY_MS 20    // Delay >= 20ms recommended
+
+#define RIGHT_FRONT_MOTOR_CR  0
+#define RIGHT_FRONT_MOTOR_ACR 0
+#define LEFT_FRONT_MOTOR_CR   0
+#define LEFT_FRONT_MOTOR_ACR  0
+#define RIGHT_BACK_MOTOR_CR   0
+#define RIGHT_BACK_MOTOR_ACR  0
+#define LEFT_BACK_MOTOR_CR    0
+#define LEFT_BACK_MOTOR_ACR   0
+
 #include <Adafruit_Sensor.h>
 
 #define program_died() while (1)
@@ -30,7 +46,21 @@ class MTTEH
 {
   public:
     void check_serial();
-    class MTTEH_MMA8451;
+    static MMA8451 mma8451;
+    static Move movement;
+};
+
+// Movement functions
+
+class Move
+{
+  public:
+    void stop();
+    void forward();
+    void backward();
+    void right();
+    void left();
+    void short_test();
 };
 
 // MMA8451 functions
@@ -39,31 +69,23 @@ class MTTEH
 
 class MMA8451
 {
-    static Adafruit_MMA8451 _sensor;
-    static sensors_event_t _event;
-
   public:
+    static Adafruit_MMA8451 sensor;
     void init();
-    void read();
-    class Print
-    {
-      public:
-        void X();
-        void Y();
-        void Z();
-    };
-    bool get_event();
+    void show_X();
+    void show_Y();
+    void show_Z();
     class Event
     {
-        class Print
-        {
-          public:
-            void X();
-            void Y();
-            void Z();
-        };
+      public:
+        static sensors_event_t latest;
+        bool get_event();
+        void show_X();
+        void show_Y();
+        void show_Z();
     };
     uint8_t get_orientation();
+    Event event = Event();
 };
 
 // SGP30 functions

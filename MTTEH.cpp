@@ -28,78 +28,143 @@ void check_serial()
         program_died();
 }
 
+// Movement functions
+
+void Move::stop()
+{
+    analogWrite(RIGHT_FRONT_MOTOR_CR, NO_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_CR, NO_SPEED);
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, NO_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, NO_SPEED);
+    analogWrite(LEFT_FRONT_MOTOR_CR, NO_SPEED);
+    analogWrite(LEFT_BACK_MOTOR_CR, NO_SPEED);
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, NO_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, NO_SPEED);
+
+    delay(MOVE_STOP_SAFE_DELAY_MS);
+}
+
+void Move::forward()
+{
+    stop();
+
+    analogWrite(RIGHT_FRONT_MOTOR_CR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_CR, HIGH_SPEED);
+    analogWrite(LEFT_FRONT_MOTOR_CR, HIGH_SPEED);
+    analogWrite(LEFT_BACK_MOTOR_CR, HIGH_SPEED);
+}
+
+void Move::backward()
+{
+    stop();
+
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, HIGH_SPEED);
+}
+
+void Move::right()
+{
+    stop();
+
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(LEFT_FRONT_MOTOR_CR, HIGH_SPEED);
+    analogWrite(LEFT_BACK_MOTOR_CR, HIGH_SPEED);
+}
+
+void Move::left()
+{
+    stop();
+
+    analogWrite(RIGHT_FRONT_MOTOR_CR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_CR, HIGH_SPEED);
+    analogWrite(RIGHT_FRONT_MOTOR_ACR, HIGH_SPEED);
+    analogWrite(RIGHT_BACK_MOTOR_ACR, HIGH_SPEED);
+}
+
+void Move::short_test()
+{
+    forward();
+    delay(500);
+    backward();
+    delay(500);
+    right();
+    delay(500);
+    left();
+    delay(500);
+    stop();
+}
+
 // MMA8451 functions
 
 void MMA8451::init()
 {
-    //check_serial();
-    _sensor = Adafruit_MMA8451();
+    MTTEH().check_serial();
+
+    sensor = Adafruit_MMA8451();
     Serial.println("MMA8451 Initialization !");
 
-    if (!_sensor.begin()) {
+    if (!sensor.begin()) {
         Serial.println("MMA8451 Initialisation Failed !");
         Serial.println("Program died !");
         program_died();
     }
     Serial.println("MMA8451 Connected!");
-    _sensor.setRange(MMA8451_RANGE_2_G);
+    sensor.setRange(MMA8451_RANGE_2_G);
     Serial.print("Range = ");
-    Serial.print(2 << _sensor.getRange());
+    Serial.print(2 << sensor.getRange());
     Serial.println("G");
 }
 
-void MMA8451::read()
-{
-    _sensor.read();
-}
-
-void MMA8451::Print::X()
+void MMA8451::show_X()
 {
     Serial.print("X: ");
-    Serial.println(_sensor.x);
+    Serial.println(sensor.x);
 }
 
-void MMA8451::Print::Y()
+void MMA8451::show_Y()
 {
     Serial.print("Y: ");
-    Serial.println(_sensor.y);
+    Serial.println(sensor.y);
 }
 
-void MMA8451::Print::Z()
+void MMA8451::show_Z()
 {
     Serial.print("Z: ");
-    Serial.println(_sensor.z);
+    Serial.println(sensor.z);
 }
 
-bool MMA8451::get_event()
+bool MMA8451::Event::get_event()
 {
-    return _sensor.getEvent(&_event);
+    return sensor.getEvent(&latest);
 }
 
-void MMA8451::Event::Print::X()
+void MMA8451::Event::show_X()
 {
     Serial.print("X: ");
-    Serial.print(_event.acceleration.x);
+    Serial.print(latest.acceleration.x);
     Serial.println("m/s^2");
 }
 
-void MMA8451::Event::Print::Y()
+void MMA8451::Event::show_Y()
 {
     Serial.print("Y: ");
-    Serial.print(_event.acceleration.y);
+    Serial.print(latest.acceleration.y);
     Serial.println("m/s^2");
 }
 
-void MMA8451::Event::Print::Z()
+void MMA8451::Event::show_Z()
 {
     Serial.print("Z: ");
-    Serial.print(_event.acceleration.z);
+    Serial.print(latest.acceleration.z);
     Serial.println("m/s^2");
 }
 
 uint8_t MMA8451::get_orientation()
 {
-    return _sensor.getOrientation();
+    return sensor.getOrientation();
 }
 
 // SGP30 functions
